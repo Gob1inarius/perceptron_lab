@@ -21,3 +21,8 @@ class Perceptron:
             return 1
         else:
             return 0
+
+    def predict(self, x: npt.NDArray[np.float64]) -> int:
+        """Compute sum w1*x1 + w2*x2 + ... + bias and passes it through activate."""
+        z = np.dot(self.w, x) + self.bias
+        return self.activate(z)
