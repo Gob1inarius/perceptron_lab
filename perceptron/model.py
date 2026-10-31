@@ -26,3 +26,17 @@ class Perceptron:
         """Compute sum w1*x1 + w2*x2 + ... + bias and passes it through activate."""
         z = np.dot(self.w, x) + self.bias
         return self.activate(z)
+
+    def train(self, X: npt.NDArray[np.float64], y: npt.NDArray[np.int_]) -> list[int]:
+        """Fit weights on X, y; return the number of misclassified samples per epoch."""
+        errors: list[int] = []
+        for _ in range(self.epochs):
+            errors_counter = 0
+            for xi, target in zip(X, y, strict = True):
+                pred = self.predict(xi)
+                if target != pred:
+                    errors_counter += 1
+                self.w += self.learning_rate * (target - pred) * xi
+                self.bias += self.learning_rate * (target - pred)
+            errors.append(errors_counter)
+        return errors

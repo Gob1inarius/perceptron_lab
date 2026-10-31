@@ -26,3 +26,16 @@ def test_predict() -> None:
     assert p.predict(np.array([0.0, 1.0])) == 0
     assert p.predict(np.array([1.0, 0.0])) == 0
     assert p.predict(np.array([0.0, 0.0])) == 0
+
+
+def test_train() -> None:
+    p = Perceptron(n_features=2)
+    X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)
+    y = np.array([0, 0, 0, 1])
+    errors = p.train(X, y)
+    assert p.predict(np.array([1.0, 1.0])) == 1
+    assert p.predict(np.array([0.0, 1.0])) == 0
+    assert p.predict(np.array([1.0, 0.0])) == 0
+    assert p.predict(np.array([0.0, 0.0])) == 0
+    assert errors[-1] == 0
+    assert len(errors) == p.epochs
