@@ -38,6 +38,7 @@ def test_train_learn() -> None:
     assert p.predict(np.array([1.0, 0.0])) == 0
     assert p.predict(np.array([0.0, 0.0])) == 0
 
+
 def test_errors_len_equals_epochs() -> None:
     p = Perceptron(n_features=2)
     X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)
@@ -45,12 +46,14 @@ def test_errors_len_equals_epochs() -> None:
     errors = p.train(X, y)
     assert len(errors) == p.epochs
 
+
 def test_score_after_training_is_one() -> None:
     p = Perceptron(n_features=2)
     X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)
     y = np.array([0, 0, 0, 1])
     p.train(X, y)
     assert p.score(X, y) == 1.0
+
 
 def test_score_before_training_is_quarter() -> None:
     p = Perceptron(n_features=2)

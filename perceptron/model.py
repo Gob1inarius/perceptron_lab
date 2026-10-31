@@ -32,7 +32,7 @@ class Perceptron:
         errors: list[int] = []
         for _ in range(self.epochs):
             errors_counter = 0
-            for xi, target in zip(X, y, strict = True):
+            for xi, target in zip(X, y, strict=True):
                 pred = self.predict(xi)
                 if target != pred:
                     errors_counter += 1
