@@ -40,3 +40,11 @@ class Perceptron:
                 self.bias += self.learning_rate * (target - pred)
             errors.append(errors_counter)
         return errors
+
+    def score(self, X: npt.NDArray[np.float64], y: npt.NDArray[np.int_]) -> float:
+        """Compute the proportion of correct answers"""
+        correct_num = 0
+        for xi, target in zip(X, y, strict=True):
+            if target == self.predict(xi):
+                correct_num += 1
+        return correct_num / len(y)
