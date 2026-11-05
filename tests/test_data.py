@@ -33,7 +33,7 @@ def test_different_seeds_give_defferent_results() -> None:
     assert not np.array_equal(X1, X2)
 
 
-def test_integration() -> None:
+def test_for_seperated_data_score_is_one() -> None:
     p = Perceptron(n_features=2)
     X, y = make_clouds(200)
     p.train(X, y)
