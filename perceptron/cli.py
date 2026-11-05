@@ -4,7 +4,7 @@ import argparse
 
 import matplotlib.pyplot as plt
 
-from perceptron.data import make_clouds
+from perceptron.data import load_iris_binary, make_clouds
 from perceptron.model import Perceptron
 from perceptron.plots import plot_decision_boundary, plot_errors
 
@@ -22,6 +22,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="build decision boundary and error plots, save them as PNG and show them",
     )
+    parser.add_argument(
+        "--dataset",
+        choices=["clouds", "iris"],
+        default="clouds",
+        help="dataset to use; --samples is ignored for iris",
+    )
 
     args = parser.parse_args(argv)
 
@@ -37,8 +43,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
-    X, y = make_clouds(args.samples)
-    p = Perceptron(n_features=2, learning_rate=args.lr, epochs=args.epochs)
+    if args.dataset == "clouds":
+        X, y = make_clouds(args.samples)
+    else:
+        X, y = load_iris_binary()
+    p = Perceptron(n_features=X.shape[1], learning_rate=args.lr, epochs=args.epochs)
     errors = p.train(X, y)
     print(f"Accuracy: {p.score(X, y):.2f}")
     if args.plot:

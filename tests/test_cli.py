@@ -34,3 +34,15 @@ def test_epochs_too_small() -> None:
 def test_main_prints_accuracy(capsys: pytest.CaptureFixture[str]) -> None:
     main(["--samples", "50"])
     assert "Accuracy" in capsys.readouterr().out
+
+
+def test_main_prints_accuracy_is_one_for_iris(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    main(["--dataset", "iris"])
+    assert "Accuracy: 1.00" in capsys.readouterr().out
+
+
+def test_dataset_incorrect() -> None:
+    with pytest.raises(SystemExit):
+        parse_args(["--dataset", "wine"])
