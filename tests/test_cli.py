@@ -1,6 +1,6 @@
 import pytest
 
-from perceptron.cli import parse_args
+from perceptron.cli import main, parse_args
 
 
 def test_default_values_are_correct() -> None:
@@ -29,3 +29,8 @@ def test_learning_rate_too_small() -> None:
 def test_epochs_too_small() -> None:
     with pytest.raises(SystemExit):
         parse_args(["--epochs", "0"])
+
+
+def test_main_prints_accuracy(capsys: pytest.CaptureFixture[str]) -> None:
+    main(["--samples", "50"])
+    assert "Accuracy" in capsys.readouterr().out
